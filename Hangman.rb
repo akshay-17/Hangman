@@ -1,7 +1,7 @@
 require 'net/http'
 class Hangman
     attr_accessor :chosen_word,:wordLength,:players_word,:used_characters,:turns,:temp_word
-    #constructor
+    
     def initialize(turns=5)
         @chosen_word = select_word.upcase
         @wordLength = @chosen_word.length
@@ -19,14 +19,14 @@ class Hangman
     # Randomly choose words from the given api
     def select_word
         uri = URI('https://random-word-api.herokuapp.com/word?number=5')
-        words =Net::HTTP.get(uri)  
-        words= words.delete("[").delete("]").delete("\"")
-        words= words.split(",")
+        words = Net::HTTP.get(uri)  
+        words = words.delete("[").delete("]").delete("\"")
+        words = words.split(",")
         index = rand(words.count - 1)
         return words[index]
     end
 
-    def game_over
+    def game_over?
         @temp_word= @players_word
         @temp_word=@temp_word.delete(" ")
 
